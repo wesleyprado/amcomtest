@@ -14,6 +14,7 @@
 
 const { rmdir } = require('fs')
 const allureWriter = require('@shelex/cypress-allure-plugin/writer')
+const cucumber = require('cypress-cucumber-preprocessor').default
 
 /**
  * @type {Cypress.PluginConfig}
@@ -22,7 +23,7 @@ module.exports = (on, config) => {
   on('task', {
     deleteFolder(folderName) {
       console.log('deleting folder %s', folderName)
-  
+
       return new Promise((resolve, reject) => {
         rmdir(folderName, { maxRetries: 10, recursive: true }, (err) => {
           if (err) {
@@ -35,6 +36,10 @@ module.exports = (on, config) => {
     },
   })
   
+  module.exports = (on, config) => {
+    on('file:preprocessor', cucumber())
+  }
+
   allureWriter(on, config);
   return config;
 }

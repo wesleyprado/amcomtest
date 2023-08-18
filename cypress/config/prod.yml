@@ -1,3 +1,0 @@
-config:
-  URL_BASE: "https://amcomtesteqa.z15.web.core.windows.net/"
-  timeout: 30000
